@@ -21,7 +21,7 @@ def get_bing_shite(ip_addr):
     total_count = bing_response['SearchResponse']['Web']['Total']
     for r in search_results:
         results.add(r['Url'])
-    if total_count > 50:
+    if total_count > 50: # fuck default 50 results boundary for fun and profit
         page = 1
         while total_count > 0:
             bing_response = bing.search("ip:%s" % ip_addr,
@@ -33,7 +33,6 @@ def get_bing_shite(ip_addr):
             total_count -= 50
     return results
 
-
 if __name__ == '__main__':
     with open(".apikey") as keyfile:
         API_KEY = keyfile.readline().strip()
@@ -41,15 +40,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
     bing = pybing.Bing(API_KEY)
     if args.ip:
-        results = get_bing_shite(args.ip)
+        final_results = get_bing_shite(args.ip)
     if args.file:
-        results = []
-        for ip_addr in args.file.readlines():
-            ip_addr = ip_addr.strip()
-            results.append("\n# %s" % ip_addr)
-            results += get_bing_shite(ip_addr)
+        final_results = []
+        for ip_address in args.file.readlines():
+            ip_address = ip_address.strip()
+            final_results.append("\n# %s" % ip_address)
+            final_results += get_bing_shite(ip_address)
 
-    results_string = "\n".join(results)
+    results_string = "\n".join(final_results)
     if args.output:
         if args.append_output:
             flag = 'a'
