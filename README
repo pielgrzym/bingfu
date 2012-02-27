@@ -41,6 +41,30 @@ Usage
         -s, --alphabetical-order
                                 Alphabetical order of domains
 
+Examples
+--------
+
+        python bingfu.py -i 207.97.227.239
+        > https://github.com/
+        > https://github.com/twitter/bootstrap
+
+        python bingfu.py -i 207.97.227.239 -u
+        > https://github.com/
+        
+        python bingfu.py -i 207.97.227.239 -u -o my_pentest.txt
+        > same as above but results put in my_pentest.txt instead of screen
+
+        python bingfu.py -f my_happy_victims.txt -u -s
+        > # 1.2.3.4
+        > http://aaaa.com
+        > http://bbbb.com
+        > 
+        > # 3.2.1.1
+        > http://example4.com
+        >
+        > # 8.8.8.8
+        > http://google-dns-is-evil.va
+
 License
 -------
 
