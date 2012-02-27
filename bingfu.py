@@ -6,6 +6,8 @@ parser = argparse.ArgumentParser(prog="bingfu",
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('-i', '--ip', metavar='xxx.xxx.xxx.xxx', type=str, help="IP to check")
 group.add_argument('-f', '--file', metavar='filename', type=file, help="File with ips")
+parser.add_argument('-o', '--output', metavar='outfile', type=str, help="Output file")
+parser.add_argument('-a', '--append-output', action='store_true', help="Append to output file instead of overwriting")
 
 def get_bing_shite(ip_addr):
     bing_response = bing.search_web("ip:%s" % ip_addr)
@@ -37,5 +39,13 @@ if __name__ == '__main__':
             results.append("\n# %s" % ip_addr)
             results += get_bing_shite(ip_addr)
 
-    for r in results:
-        print r
+    results_string = "\n".join(results)
+    if args.output:
+        if args.append_output:
+            flag = 'a'
+        else:
+            flag = 'w'
+        with open(args.output, flag) as outfile:
+            outfile.write(results_string + "\n")
+    else:
+        print results_string
