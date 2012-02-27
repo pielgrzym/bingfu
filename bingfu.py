@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/env python
 import pybing, argparse
 
 parser = argparse.ArgumentParser(prog="bingfu",
@@ -13,7 +13,7 @@ parser.add_argument('-s', '--alphabetical-order', action='store_true', help="Alp
 
 def get_bing_shite(ip_addr):
     bing_response = bing.search("ip:%s" % ip_addr, extra_params={"web.count":50})
-    results = set()
+    results = set() # Igor! Kill the fly. I want to be ALONE.
     try:
         search_results = bing_response['SearchResponse']['Web']['Results']
     except KeyError:
@@ -36,7 +36,7 @@ def get_bing_shite(ip_addr):
     return list(results)
 
 def remove_duplicates(urls):
-    result = set()
+    result = set() # Igor! Kill the fly. I want to be ALONE.
     for url in urls:
         clean_url = "http://%s/" % url.split("/")[2]
         result.add(clean_url)
