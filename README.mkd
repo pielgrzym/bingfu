@@ -19,6 +19,11 @@ Installation / requirements
 Requires python 2.7 or newer (for argparse to work) and pybing Bing API wrapper:
         
         pip install -e git+https://github.com/hcliff/pybing.git#egg=pybing
+        mkdir bingfu
+        cd bingfu
+        git clone https://pielgrzym@github.com/pielgrzym/bingfu.git .
+        echo "<your bing api key>" > .apikey
+        ./bingfu.py -h
 
 Usage
 -----
