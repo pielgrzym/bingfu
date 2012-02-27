@@ -2,10 +2,10 @@
 import pybing, argparse
 
 parser = argparse.ArgumentParser(prog="bingfu",
-        description="List domains pointing to given ips")
+        description="List domains pointing to given IPs")
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument('-i', '--ip', metavar='xxx.xxx.xxx.xxx', type=str, help="IP to check")
-group.add_argument('-f', '--file', metavar='filename', type=file, help="File with ips")
+group.add_argument('-f', '--file', metavar='filename', type=file, help="File with IPs")
 parser.add_argument('-o', '--output', metavar='outfile', type=str, help="Output file")
 parser.add_argument('-a', '--append-output', action='store_true', help="Append to output file instead of overwriting")
 parser.add_argument('-u', '--unique-output', action='store_true', help="Show only main domains and filter out duplicates")
@@ -38,7 +38,7 @@ def get_bing_shite(ip_addr):
 def remove_duplicates(urls):
     result = set()
     for url in urls:
-        clean_url = "http://%s" % url.split("/")[2]
+        clean_url = "http://%s/" % url.split("/")[2]
         result.add(clean_url)
     return list(result)
 
