@@ -1,0 +1,7 @@
+.ropeproject
+.project
+.pydevproject
+*.pyc
+.idea
+/*.vim
+.apikey
