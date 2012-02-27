@@ -8,6 +8,8 @@ group.add_argument('-i', '--ip', metavar='xxx.xxx.xxx.xxx', type=str, help="IP t
 group.add_argument('-f', '--file', metavar='filename', type=file, help="File with ips")
 parser.add_argument('-o', '--output', metavar='outfile', type=str, help="Output file")
 parser.add_argument('-a', '--append-output', action='store_true', help="Append to output file instead of overwriting")
+parser.add_argument('-u', '--unique-output', action='store_true', help="Show only main domains and filter out duplicates")
+parser.add_argument('-s', '--alphabetical-order', action='store_true', help="Alphabetical order of domains")
 
 def get_bing_shite(ip_addr):
     bing_response = bing.search("ip:%s" % ip_addr, extra_params={"web.count":50})
@@ -31,7 +33,14 @@ def get_bing_shite(ip_addr):
                 results.add(r['Url'])
             page += 1
             total_count -= 50
-    return results
+    return list(results)
+
+def remove_duplicates(urls):
+    result = set()
+    for url in urls:
+        clean_url = "http://%s" % url.split("/")[2]
+        result.add(clean_url)
+    return list(result)
 
 if __name__ == '__main__':
     with open(".apikey") as keyfile:
@@ -41,12 +50,21 @@ if __name__ == '__main__':
     bing = pybing.Bing(API_KEY)
     if args.ip:
         final_results = get_bing_shite(args.ip)
+        if args.unique_output:
+            final_results = remove_duplicates(final_results)
+        if args.alphabetical_order:
+            final_results.sort()
     if args.file:
         final_results = []
         for ip_address in args.file.readlines():
             ip_address = ip_address.strip()
             final_results.append("\n# %s" % ip_address)
-            final_results += get_bing_shite(ip_address)
+            new_results = get_bing_shite(ip_address)
+            if args.unique_output:
+                new_results = remove_duplicates(new_results)
+            if args.alphabetical_order:
+                new_results.sort()
+            final_results += new_results
 
     results_string = "\n".join(final_results)
     if args.output:
