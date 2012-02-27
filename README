@@ -1,0 +1,47 @@
+Bing FU
+=======
+
+Find all domains pointing to given IP using Bing Search API
+-----------------------------------------------------------
+
+Simple tool to enumerate all domains pointing to given IP. 
+
+Features:
+
+1.      Check single IP or multiple IPs (from a file)
+2.      Remove duplicate domains (-u option)
+3.      Not limited by default max 50 results per query in Bing API
+4.      Free shite!
+
+Installation / requirements
+---------------------------
+
+Requires python 2.7 or newer (for argparse to work) and pybing Bing API wrapper:
+        
+        pip install -e git+https://github.com/hcliff/pybing.git#egg=pybing
+
+Usage
+-----
+
+        usage: bingfu [-h] (-i xxx.xxx.xxx.xxx | -f filename) [-o outfile] [-a] [-u]
+                [-s]
+
+        List domains pointing to given IPs
+
+        optional arguments:
+        -h, --help            show this help message and exit
+        -i xxx.xxx.xxx.xxx, --ip xxx.xxx.xxx.xxx
+                                IP to check
+        -f filename, --file filename
+                                File with IPs
+        -o outfile, --output outfile
+                                Output file
+        -a, --append-output   Append to output file instead of overwriting
+        -u, --unique-output   Show only main domains and filter out duplicates
+        -s, --alphabetical-order
+                                Alphabetical order of domains
+
+License
+-------
+
+GNU General Public License v2
