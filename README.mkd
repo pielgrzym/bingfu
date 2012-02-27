@@ -25,6 +25,9 @@ Installation / requirements
         echo "<your bing api key>" > .apikey
         ./bingfu.py -h
 
+To get the API key you have to take this ring and throw it into the volcano, errr, wrong readme. Just follow this link:
+<https://ssl.bing.com/webmaster/developers/createapp.aspx>
+
 Usage
 -----
 
