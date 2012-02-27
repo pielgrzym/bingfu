@@ -10,7 +10,7 @@ parser.add_argument('-o', '--output', metavar='outfile', type=str, help="Output 
 parser.add_argument('-a', '--append-output', action='store_true', help="Append to output file instead of overwriting")
 
 def get_bing_shite(ip_addr):
-    bing_response = bing.search_web("ip:%s" % ip_addr)
+    bing_response = bing.search("ip:%s" % ip_addr, extra_params={"web.count":50})
     results = set()
     try:
         search_results = bing_response['SearchResponse']['Web']['Results']
@@ -18,9 +18,19 @@ def get_bing_shite(ip_addr):
         return []
     if len(search_results) == 0:
         return []
-
+    total_count = bing_response['SearchResponse']['Web']['Total']
     for r in search_results:
         results.add(r['Url'])
+    if total_count > 50:
+        page = 1
+        while total_count > 0:
+            bing_response = bing.search("ip:%s" % ip_addr,
+                    extra_params={"web.count":50, "web.offset":50*page})
+            search_results = bing_response['SearchResponse']['Web']['Results']
+            for r in search_results:
+                results.add(r['Url'])
+            page += 1
+            total_count -= 50
     return results
 
 
