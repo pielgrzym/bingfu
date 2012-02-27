@@ -38,7 +38,7 @@ def get_bing_shite(ip_addr):
 def remove_duplicates(urls):
     result = set() # Igor! Kill the fly. I want to be ALONE.
     for url in urls:
-        clean_url = "http://%s/" % url.split("/")[2]
+        clean_url = "%s//%s/" % (url.split("/")[0], url.split("/")[2])
         result.add(clean_url)
     return list(result)
 
