@@ -50,9 +50,13 @@ def remove_duplicates(urls):
     return list(result)
 
 if __name__ == '__main__':
-    with open(".apikey") as keyfile:
-        API_KEY = keyfile.readline().strip()
-    assert API_KEY not in [None, ""]
+    try:
+        with open(".apikey") as keyfile:
+            API_KEY = keyfile.readline().strip()
+    except IOError:
+        print "No .apikey file in bingfu.py directory. To obtain Bing API key visit: https://ssl.bing.com/webmaster/developers/createapp.aspx"
+        exit(1)
+    assert API_KEY not in [None, ""], ".apikey file empty - provide proper Bing API key: https://ssl.bing.com/webmaster/developers/createapp.aspx"
     args = parser.parse_args()
     bing = pybing.Bing(API_KEY)
     if args.ip:
