@@ -31,8 +31,7 @@ To get the API key you have to take this ring and throw it into the volcano, err
 Usage
 -----
 
-        usage: bingfu [-h] (-i xxx.xxx.xxx.xxx | -f filename) [-o outfile] [-a] [-u]
-                [-s]
+        usage: bingfu [-h] (-i xxx.xxx.xxx.xxx | -f filename) [-o outfile] [-a] [-u] [-s]
 
         List domains pointing to given IPs
 
