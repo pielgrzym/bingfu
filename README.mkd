@@ -47,6 +47,7 @@ Usage
         -u, --unique-output   Show only main domains and filter out duplicates
         -s, --alphabetical-order
                                 Alphabetical order of domains
+        -e, --print-errors    Print errors
 
 Examples
 --------

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import pybing, argparse
+import re
 
 parser = argparse.ArgumentParser(prog="bingfu",
         description="List domains pointing to given IPs")
@@ -10,6 +11,9 @@ parser.add_argument('-o', '--output', metavar='outfile', type=str, help="Output 
 parser.add_argument('-a', '--append-output', action='store_true', help="Append to output file instead of overwriting")
 parser.add_argument('-u', '--unique-output', action='store_true', help="Show only main domains and filter out duplicates")
 parser.add_argument('-s', '--alphabetical-order', action='store_true', help="Alphabetical order of domains")
+parser.add_argument('-e', '--print-errors', action='store_true', help="Print errors")
+
+IP_REGEX = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
 
 def get_bing_shite(ip_addr):
     bing_response = bing.search("ip:%s" % ip_addr, extra_params={"web.count":50})
@@ -52,6 +56,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     bing = pybing.Bing(API_KEY)
     if args.ip:
+        if not re.match(IP_REGEX, args.ip):
+            if args.print_errors:
+                print "Invalid IP address: %s" % args.ip
+            exit(1)
         final_results = get_bing_shite(args.ip)
         if args.unique_output:
             final_results = remove_duplicates(final_results)
@@ -60,6 +68,10 @@ if __name__ == '__main__':
     if args.file:
         final_results = []
         for ip_address in args.file.readlines():
+            if not re.match(IP_REGEX, ip_address):
+                if args.print_errors:
+                    print "Invalid IP address: %s" % ip_address
+                continue
             ip_address = ip_address.strip()
             final_results.append("\n# %s" % ip_address)
             new_results = get_bing_shite(ip_address)
