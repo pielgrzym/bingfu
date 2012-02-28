@@ -28,7 +28,10 @@ def get_bing_shite(ip_addr):
         while total_count > 0:
             bing_response = bing.search("ip:%s" % ip_addr,
                     extra_params={"web.count":50, "web.offset":50*page})
-            search_results = bing_response['SearchResponse']['Web']['Results']
+            try:
+                search_results = bing_response['SearchResponse']['Web']['Results']
+            except KeyError:
+                continue
             for r in search_results:
                 results.add(r['Url'])
             page += 1
