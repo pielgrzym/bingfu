@@ -35,6 +35,8 @@ def get_bing_shite(ip_addr):
             try:
                 search_results = bing_response['SearchResponse']['Web']['Results']
             except KeyError:
+                page += 1
+                total_count -= 50
                 continue
             for r in search_results:
                 results.add(r['Url'])
