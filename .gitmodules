@@ -1,0 +1,3 @@
+[submodule "bing_search_api"]
+	path = bing_search_api
+	url = https://github.com/pielgrzym/pyBingSearchAPI.git
