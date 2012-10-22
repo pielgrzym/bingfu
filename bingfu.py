@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import pybing, argparse
 import re
+from bing_search_api import BingSearchAPI
 
 parser = argparse.ArgumentParser(prog="bingfu",
         description="List domains pointing to given IPs")
@@ -16,6 +17,10 @@ parser.add_argument('-e', '--print-errors', action='store_true', help="Print err
 IP_REGEX = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
 
 def get_bing_shite(ip_addr):
+    params = {
+            '$format': 'json',
+            #XXX: finish dat
+            }
     bing_response = bing.search("ip:%s" % ip_addr, extra_params={"web.count":50})
     results = set() # Igor! Kill the fly. I want to be ALONE.
     try:
@@ -60,7 +65,7 @@ if __name__ == '__main__':
         exit(1)
     assert API_KEY not in [None, ""], ".apikey file empty - provide proper Bing API key: https://ssl.bing.com/webmaster/developers/createapp.aspx"
     args = parser.parse_args()
-    bing = pybing.Bing(API_KEY)
+    bing = BingSearchAPI(API_KEY)
     if args.ip:
         if not re.match(IP_REGEX, args.ip):
             if args.print_errors:

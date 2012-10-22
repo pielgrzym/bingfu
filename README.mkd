@@ -1,6 +1,9 @@
 Bing FU
 =======
 
+Temporarly out of service due to M$ api changes. Work in progress to make azure behave.
+---------------------------------------------------------------------------------------
+
 Find all domains pointing to given IP using Bing Search API
 -----------------------------------------------------------
 
